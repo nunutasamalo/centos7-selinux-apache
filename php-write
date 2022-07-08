@@ -1,0 +1,44 @@
+
+CentOS 7 + SELinux + Apache + PHP write/access permission
+
+
+CentOS 7 have SELinux, it is security enhancement to Linux which allows users more control over access control.
+
+SELinux make problem to access or write files or directories
+
+– Can’t serve files on directory
+– Can’t write to file
+
+SELinux is blocking the read/write operations
+
+# chcon -Rv --type=httpd_sys_rw_content_t /var/www/html/ (if you want to allow full web root)
+
+# chcon -Rv --type=httpd_sys_rw_content_t /var/www/html/uploads/ (Or just uploads folder)
+
+Ownership
+# chown apache:apache -R /var/www/html/
+
+Recursive File permissions
+# find . -type f -exec chmod 0644 {} \;
+
+Recursive Directory permissions
+# find . -type d -exec chmod 0755 {} \;
+
+Resursive SELinux serve files off Apache
+# chcon -t httpd_sys_content_t /var/www/html/ -R
+
+Allow write to specific directories
+# chcon -t httpd_sys_rw_content_t /var/www/html/logs/ -R
+# chcon -t httpd_sys_rw_content_t /var/www/html/uploads/ -R
+
+httpd_sys_content_t – allow Apache to serve contents
+httpd_sys_rw_content_t – allow Apache to write to those path.
+
+
+==================================================================
+To permanently mark that directory as httpd_sys_rw_content_t,you can use the command
+ 
+semanage fcontext -a -t httpd_sys_rw_content_t /var/www/webapp/k/site(/.*)?; 
+restorecon -RF /var/www/webapp/k/site/ 
+
+This will survive SELINUX binary policy updates and filesystem relabeling.
