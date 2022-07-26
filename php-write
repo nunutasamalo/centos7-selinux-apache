@@ -35,10 +35,17 @@ httpd_sys_content_t – allow Apache to serve contents
 httpd_sys_rw_content_t – allow Apache to write to those path.
 
 
+ semanage fcontext -a -t httpd_sys_content_t /home/resources/db.properties
+ 1037  ls -laZ /home/resources/db.properties
+ 1038  restorecon -R -v /home/resources/db.properties
+
+
 ==================================================================
 To permanently mark that directory as httpd_sys_rw_content_t,you can use the command
  
 semanage fcontext -a -t httpd_sys_rw_content_t /var/www/webapp/k/site(/.*)?; 
+
+~]# semanage fcontext -a -t httpd_sys_content_t "/my(/.*)?"
 restorecon -RF /var/www/webapp/k/site/ 
 
 This will survive SELINUX binary policy updates and filesystem relabeling.
