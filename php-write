@@ -17,7 +17,7 @@ Allow Apache to open and read file:
 
 
 
-To handle PHP Notice:  Cannot connect to 127.0.0.1:22. Error 13 (curl)
+To handle PHP Notice:  Cannot connect to 127.0.0.1:22. Error 13 (allow httpd connect to external network)
 #getsebool -a
 #setsebool -P httpd_can_network_connect 1
 #systemctl restart httpd
