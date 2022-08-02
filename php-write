@@ -3,7 +3,9 @@ CentOS 7 + SELinux + Apache + PHP write/access permission
 To permanently mark that directory as httpd_sys_rw_content_t, Allow Apache to write to folder
 Run this command: semanage fcontext -a -t httpd_sys_rw_content_t "/path"
 
-#chmod -R 755 /var/www/html/mayora_trans/log
+Alternatively particular folder can be adjusted.
+1. Create Direktory log
+#chmod -R 755 /var/www/html/mayora_trans/log 
 #chown apache:apache -R /var/www/html/mayora_trans/log
 #semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/mayora_trans/log(/.*)?"
 #restorecon -R -v /var/www/html/mayora_trans/log/
